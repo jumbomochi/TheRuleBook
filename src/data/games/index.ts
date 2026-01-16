@@ -1,9 +1,15 @@
 import { Game } from '../../types/game';
 import { splendor } from './splendor';
+import { wingspan } from './wingspan';
+import { terraformingMars } from './terraforming-mars';
+import { ticketToRide } from './ticket-to-ride';
 
 // All available games
 export const games: Record<string, Game> = {
   splendor,
+  wingspan,
+  'terraforming-mars': terraformingMars,
+  'ticket-to-ride': ticketToRide,
 };
 
 // Get a game by ID

@@ -28,9 +28,31 @@ export interface Game {
   // Companion configuration
   scoring: ScoringConfig;
   resources?: ResourceConfig[];
+  phases?: GamePhase[];
+  variants?: GameVariant[];
+  expansions?: GameExpansion[];
 
   // Asset references
   assets: GameAssets;
+}
+
+export interface GamePhase {
+  id: string;
+  name: string;
+  description?: string;
+  order: number;
+}
+
+export interface GameVariant {
+  id: string;
+  name: string;
+  description?: string;
+}
+
+export interface GameExpansion {
+  id: string;
+  name: string;
+  description?: string;
 }
 
 export interface RuleSection {
@@ -38,24 +60,33 @@ export interface RuleSection {
   title: string;
   content: string; // Markdown content
   order: number;
+  level?: number;
   subsections?: RuleSection[];
   tags?: string[];
+  examples?: string[];
 }
 
 export interface QuickRefCard {
   id: string;
   title: string;
-  content: string;
+  content?: string;
   category: string;
   icon?: string;
+  items: Array<{
+    label?: string;
+    value: string;
+    description?: string;
+  }>;
 }
 
 export interface FAQItem {
   id: string;
   question: string;
   answer: string;
+  category?: string;
   tags?: string[];
   source?: string; // BGG, rulebook, etc.
+  relatedRules?: string[];
 }
 
 export interface TurnPhase {
@@ -90,8 +121,8 @@ export interface ResourceConfig {
   icon?: string;
   color?: string;
   startingValue?: number;
-  maxValue?: number;
-  minValue?: number;
+  max?: number;
+  min?: number;
   perPlayer?: boolean;
   shared?: boolean;
 }

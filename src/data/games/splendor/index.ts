@@ -137,36 +137,43 @@ The game ends when a player reaches **15 or more prestige points**.
       id: 'actions',
       title: 'Available Actions',
       category: 'Turn',
-      content: `**Choose ONE:**
-• Take 3 different gems
-• Take 2 same gems (if 4+ available)
-• Reserve 1 card + take 1 gold
-• Purchase 1 card`,
+      items: [
+        { label: 'Option 1', value: 'Take 3 different gems' },
+        { label: 'Option 2', value: 'Take 2 same gems (if 4+ available)' },
+        { label: 'Option 3', value: 'Reserve 1 card + take 1 gold' },
+        { label: 'Option 4', value: 'Purchase 1 card' },
+      ],
     },
     {
       id: 'limits',
       title: 'Limits',
       category: 'Rules',
-      content: `• Max 10 tokens in hand
-• Max 3 reserved cards
-• Gold: always 5 available`,
+      items: [
+        { label: 'Tokens', value: 'Max 10 tokens in hand' },
+        { label: 'Reserved', value: 'Max 3 reserved cards' },
+        { label: 'Gold', value: 'Always 5 available' },
+      ],
     },
     {
       id: 'nobles',
       title: 'Nobles',
       category: 'Scoring',
-      content: `• Visit at end of turn (automatic)
-• Require card bonuses, not gems
-• Worth 3 prestige points each`,
+      items: [
+        { value: 'Visit at end of turn (automatic)' },
+        { value: 'Require card bonuses, not gems' },
+        { value: 'Worth 3 prestige points each' },
+      ],
     },
     {
       id: 'winning',
       title: 'Winning',
       category: 'End Game',
-      content: `• First to 15+ points triggers end
-• Finish the round
-• Most points wins
-• Tiebreaker: fewer cards`,
+      items: [
+        { value: 'First to 15+ points triggers end' },
+        { value: 'Finish the round' },
+        { value: 'Most points wins' },
+        { value: 'Tiebreaker: fewer cards' },
+      ],
     },
   ],
 

@@ -20,9 +20,8 @@ export interface GameSession {
 export interface Player {
   id: string;
   name: string;
-  color: PlayerColor;
+  color: string;
   avatar?: string;
-  isActive: boolean;
 }
 
 export type PlayerColor =
@@ -50,9 +49,14 @@ export const PLAYER_COLORS: Record<PlayerColor, string> = {
   black: '#424242',
 };
 
-// Scores per player, per category
-// { playerId: { categoryId: [score history] } }
-export type PlayerScores = Record<string, Record<string, number[]>>;
+// Scores per player - array of score entries
+export type PlayerScores = Record<string, ScoreEntry[]>;
+
+export interface ScoreEntry {
+  points: number;
+  category?: string;
+  timestamp: Date;
+}
 
 // Resources per player
 // { playerId: { resourceId: currentValue } }
