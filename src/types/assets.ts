@@ -5,6 +5,9 @@ export interface GameAssets {
   icon: string;
   colorScheme: ColorPalette;
 
+  // Card display imagery for library
+  cardCover?: CardCoverAsset;
+
   // Tier 2: Sourced externally (BGG, press kits)
   boxArt?: string;
   boxArtThumbnail?: string;
@@ -15,6 +18,19 @@ export interface GameAssets {
 
   // Tier 4: Licensed (future)
   officialPack?: OfficialAssetPack;
+}
+
+export interface CardCoverAsset {
+  // Main thematic image for the game card
+  image: string;
+  // Whether to use a gradient overlay (default: true)
+  useGradient?: boolean;
+  // Gradient direction ('bottom' | 'top' | 'left' | 'right')
+  gradientDirection?: 'bottom' | 'top' | 'left' | 'right';
+  // Thematic icon to display on the card (game-specific)
+  themeIcon?: string;
+  // Short tagline for the game
+  tagline?: string;
 }
 
 export interface ColorPalette {

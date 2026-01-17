@@ -31,7 +31,7 @@ export default function PlayScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Active Games</Text>
           {ACTIVE_SESSIONS.map((session) => (
-            <Link key={session.id} href={`/session/${session.id}`} asChild>
+            <Link key={session.id} href={`/game/${session.gameId}/play` as any} asChild>
               <Pressable
                 style={[
                   styles.sessionCard,
@@ -61,7 +61,7 @@ export default function PlayScreen() {
           <Text style={styles.emptySubtitle}>
             Start a new game session from your library
           </Text>
-          <Link href="/(tabs)/" asChild>
+          <Link href="/(tabs)" asChild>
             <Pressable
               style={[styles.browseButton, { backgroundColor: colors.tint }]}>
               <FontAwesome name="book" size={18} color={colors.background} />

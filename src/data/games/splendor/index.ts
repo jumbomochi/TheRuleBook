@@ -30,11 +30,16 @@ export const splendor: Game = {
       content: `
 # Game Overview
 
-In Splendor, you are a wealthy Renaissance merchant acquiring gem mines, transportation, and artisans to transform raw gems into beautiful jewels.
+You are a wealthy Renaissance merchant traveling the Silk Road. Your goal is to acquire gem mines, transportation methods, and artisans to transform raw gems into beautiful jewels. The more you develop your commercial empire, the more prestige you gain.
 
-**Goal:** Be the first player to reach **15 prestige points**.
+On your turn, you may:
+- Take gems from the common pool
+- Purchase and build a development card
+- Reserve a development card for the future
 
-**Game End:** When a player reaches 15 points, finish the current round so all players have equal turns, then the player with the most points wins.
+**Goal:** Be the first player to reach **15 prestige points**. Once a player reaches this threshold, complete the current round to give all players an equal number of turns.
+
+**Winner:** The player with the most prestige points. In case of a tie, the player with the fewest development cards wins.
       `.trim(),
     },
     {
@@ -44,21 +49,30 @@ In Splendor, you are a wealthy Renaissance merchant acquiring gem mines, transpo
       content: `
 # Setup
 
-1. **Shuffle** each of the three development card decks separately
-2. **Place** them in a column in the center of the table (Level 1 at bottom, Level 3 at top)
-3. **Reveal** 4 cards from each level, placing them in a row next to their deck
-4. **Shuffle** the noble tiles and reveal as many as players + 1:
+1. **Shuffle** each of the three development card decks (Level 1, 2, and 3) separately and place them in a column in the center of the table
+2. **Reveal** 4 cards from each level, placing them face-up in a row next to their respective deck
+3. **Shuffle** the noble tiles and reveal a number equal to the number of players + 1:
    - 2 players: 3 nobles
    - 3 players: 4 nobles
    - 4 players: 5 nobles
-5. **Sort** the gem tokens by color and place them in piles:
-   - 2 players: 4 of each gem color
+4. **Sort** the gem tokens by color and place them in piles within reach of all players:
+   - 2 players: 4 of each gem color (Diamond, Sapphire, Emerald, Ruby, Onyx)
    - 3 players: 5 of each gem color
    - 4 players: 7 of each gem color
-   - Gold (wild): Always 5
-6. **Determine** first player randomly
+   - Gold tokens (wild): Always 5 regardless of player count
+5. **Determine** the first player randomly (youngest player or by mutual agreement)
+
+![Setup Example](game://splendor/setup-board.jpg)
       `.trim(),
       tags: ['setup'],
+      illustrations: [
+        {
+          id: 'setup-board',
+          uri: 'game://splendor/setup-board.jpg',
+          caption: 'Example of a properly set up Splendor game board',
+          altText: 'Splendor game board setup showing card decks, nobles, and gem tokens',
+        },
+      ],
     },
     {
       id: 'turn-structure',
@@ -69,33 +83,50 @@ In Splendor, you are a wealthy Renaissance merchant acquiring gem mines, transpo
 
 Choose **ONE** of the following four actions:
 
-## 1. Take 3 Gem Tokens
-Take 3 gem tokens of **different colors**.
+## 1. Take 3 Different Gem Tokens
+Take 3 gem tokens of **different colors** from the common pool.
 
-*Restriction: You cannot take gold this way.*
+**Important:** You cannot take gold tokens with this action.
 
-## 2. Take 2 Gem Tokens
-Take 2 gem tokens of the **same color**.
+## 2. Take 2 Identical Gem Tokens
+Take 2 gem tokens of the **same color** from the common pool.
 
-*Restriction: Only allowed if there are 4+ tokens of that color available.*
+**Restriction:** This action is only allowed if there are **at least 4 tokens** of that color available in the pool before you take them.
 
-## 3. Reserve 1 Development Card
-Take a development card from the table (or top of a deck) and add it to your hand. Also take 1 gold token.
+## 3. Reserve 1 Development Card and Take 1 Gold Token
+- Take a face-up development card from the table OR the top card of any deck (without revealing it to other players)
+- Add it to your hand (face-down, kept secret)
+- Take 1 gold token from the pool
 
-*Restrictions:*
-- Maximum 3 reserved cards in hand
-- Gold is taken even if none available (you just don't get one)
+**Restrictions:**
+- You may never have more than **3 reserved cards** at a time
+- If there are no gold tokens left, you still reserve the card but don't get a gold token
 
 ## 4. Purchase 1 Development Card
-Buy a face-up card from the table OR a card from your reserved hand.
+Purchase one face-up development card from the table OR one of your previously reserved cards:
+- Pay the cost shown on the card using your gem tokens
+- Your development card bonuses (from previously purchased cards) act as permanent discounts
+- Place the purchased card face-up in front of you
+- Return spent gems to the common pool
+- Immediately gain the prestige points and permanent bonus shown on the card
 
-Pay the gem cost shown on the card. Your owned development cards provide permanent gem bonuses that reduce costs.
+![Development Cards](game://splendor/development-cards.jpg)
+
+**Gold Tokens:** Gold tokens are wild and can substitute for any gem color.
 
 ---
 
-**Token Limit:** You may never have more than **10 tokens** (including gold). If you exceed 10, return tokens until you have 10.
+**Token Limit:** You may never have more than **10 tokens** total (including gold). If an action would cause you to exceed this limit, you must return tokens until you have exactly 10 before the end of your turn.
       `.trim(),
       tags: ['actions', 'turn'],
+      illustrations: [
+        {
+          id: 'development-cards',
+          uri: 'game://splendor/development-cards.jpg',
+          caption: 'Development cards showing gem costs and bonuses',
+          altText: 'Three development cards from Splendor showing different levels and gem requirements',
+        },
+      ],
     },
     {
       id: 'nobles',
@@ -104,12 +135,21 @@ Pay the gem cost shown on the card. Your owned development cards provide permane
       content: `
 # Noble Visits
 
-At the **end of your turn**, if you have enough development card bonuses to meet a noble's requirements, that noble visits you.
+Nobles are attracted to powerful merchants. At the **end of your turn**, check if you meet the requirements shown on any noble tile.
 
-- Noble visits are **automatic** - you cannot refuse
-- If you qualify for multiple nobles, **choose one**
-- The noble tile is placed in front of you and worth **3 prestige points**
-- Each noble can only visit one player
+**Requirements:** Nobles require specific numbers of development card bonuses (NOT gem tokens). For example, a noble might require 4 red bonuses and 4 black bonuses from your purchased cards.
+
+**When You Qualify:**
+- If you meet a noble's requirements, that noble **automatically visits** you
+- Noble visits happen at the end of your turn, after all other actions
+- You cannot refuse a noble visit
+- If you qualify for **multiple nobles** at once, you **choose one**
+- Place the noble tile in front of you - it is immediately worth **3 prestige points**
+
+**Important Notes:**
+- Each noble can only visit one player (first come, first served)
+- Only your development card bonuses count, not your gem tokens
+- You don't spend or lose anything when a noble visits
       `.trim(),
       tags: ['nobles', 'scoring'],
     },
@@ -182,37 +222,61 @@ The game ends when a player reaches **15 or more prestige points**.
       id: 'faq-1',
       question: 'Can I take 2 gems of the same color if there are only 3 left?',
       answer:
-        'No. To take 2 gems of the same color, there must be at least 4 tokens of that color available before you take them.',
+        'No. To take 2 gems of the same color, there must be at least 4 tokens of that color available in the pool BEFORE you take them.',
     },
     {
       id: 'faq-2',
       question: 'Can I use gold tokens as any gem?',
       answer:
-        'Yes! Gold tokens are wild and can substitute for any gem color when purchasing cards.',
+        'Yes! Gold tokens are wild and can substitute for any gem color when purchasing cards. They are the only way to obtain wild gems.',
     },
     {
       id: 'faq-3',
       question: 'What if I qualify for multiple nobles on the same turn?',
       answer:
-        'You choose which noble visits you. The other noble(s) remain available for future turns.',
+        'You choose which noble visits you. The other noble(s) remain available for you or other players in future turns.',
     },
     {
       id: 'faq-4',
       question: 'Do my development card bonuses count as tokens?',
       answer:
-        'No. Card bonuses are permanent discounts and do not count toward your 10-token limit.',
+        'No. Card bonuses are permanent discounts and do not count toward your 10-token limit. Only physical gem and gold tokens count.',
     },
     {
       id: 'faq-5',
       question: 'Can I reserve a card from the top of a deck without looking?',
       answer:
-        'Yes! You can reserve the top card of any deck without revealing it to other players.',
+        'Yes! You can reserve the top card of any deck without revealing it to other players. This is useful for denying cards or when you need a gold token.',
     },
     {
       id: 'faq-6',
       question: 'What happens if a gem pile runs out?',
       answer:
-        "You cannot take gems that aren't available. If a pile is empty, choose different gems.",
+        "You cannot take gems that aren't available. If a pile is empty, you must choose a different action or different gems.",
+    },
+    {
+      id: 'faq-7',
+      question: 'Can I purchase a card if I can\'t afford it with my gems and bonuses?',
+      answer:
+        'No. You must be able to pay the full cost shown on the card. Your development bonuses reduce the cost, and gold tokens can fill any gaps, but you must pay completely.',
+    },
+    {
+      id: 'faq-8',
+      question: 'When do I check for nobles - before or after replacing cards?',
+      answer:
+        'Noble visits happen at the very end of your turn, after all cards have been replaced and your turn is complete. Only your development bonuses at that moment matter.',
+    },
+    {
+      id: 'faq-9',
+      question: 'Can I take 1 or 0 gems on my turn?',
+      answer:
+        'No. If you choose to take gems, you must take either exactly 3 different gems OR exactly 2 identical gems (if 4+ available). Taking fewer gems is not a legal action.',
+    },
+    {
+      id: 'faq-10',
+      question: 'Do I have to spend my gems when purchasing a card if my bonuses cover the cost?',
+      answer:
+        'If your development bonuses are sufficient to meet or exceed the card\'s cost, you don\'t need to spend any gem tokens at all.',
     },
   ],
 
@@ -313,5 +377,10 @@ The game ends when a player reaches **15 or more prestige points**.
   assets: {
     icon: 'splendor-icon',
     colorScheme: splendorPalette,
+    cardCover: {
+      image: 'game://splendor/card-cover.jpg',
+      tagline: 'Renaissance Gem Trading',
+      themeIcon: 'diamond',
+    },
   },
 };

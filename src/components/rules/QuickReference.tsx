@@ -2,13 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Card, Text, List, useTheme, Divider } from 'react-native-paper';
 import type { QuickRefCard } from '../../types';
+import type { ColorPalette } from '../../types/assets';
 
 interface QuickReferenceProps {
   cards: QuickRefCard[];
+  colorScheme?: ColorPalette;
 }
 
-export function QuickReference({ cards }: QuickReferenceProps) {
+export function QuickReference({ cards, colorScheme }: QuickReferenceProps) {
   const theme = useTheme();
+  const accentColor = colorScheme?.accent || theme.colors.primary;
+  const primaryColor = colorScheme?.primary || theme.colors.primary;
 
   if (!cards || cards.length === 0) {
     return (
@@ -21,11 +25,27 @@ export function QuickReference({ cards }: QuickReferenceProps) {
   return (
     <ScrollView style={styles.container}>
       {cards.map((card, index) => (
-        <Card key={card.id} style={styles.card}>
+        <Card
+          key={card.id}
+          style={[
+            styles.card,
+            colorScheme && {
+              borderLeftWidth: 4,
+              borderLeftColor: accentColor,
+            },
+          ]}
+        >
           <Card.Title
             title={card.title}
             subtitle={card.category}
-            left={(props) => <List.Icon {...props} icon="card-text" />}
+            left={(props) => (
+              <List.Icon
+                {...props}
+                icon="card-text"
+                color={primaryColor}
+              />
+            )}
+            titleStyle={{ color: primaryColor, fontWeight: '600' }}
           />
           <Card.Content>
             {card.items.map((item, itemIndex) => (
@@ -35,7 +55,7 @@ export function QuickReference({ cards }: QuickReferenceProps) {
                   {item.label && (
                     <Text
                       variant="labelMedium"
-                      style={[styles.label, { color: theme.colors.primary }]}
+                      style={[styles.label, { color: accentColor }]}
                     >
                       {item.label}
                     </Text>

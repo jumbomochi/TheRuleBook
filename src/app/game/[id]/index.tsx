@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Text as RNText } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
-import { Card, Button, Text, Chip, Divider } from 'react-native-paper';
+import { Card, Button, Text, Chip } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { useGameLibrary } from '../../../hooks';
 import { TouchableCard } from '../../../components/common/TouchableCard';
+import { HeroImage } from '../../../components/common/HeroImage';
+import { StarRating } from '../../../components/common/StarRating';
 import { SPACING, TYPOGRAPHY, TOUCH_TARGETS, isTablet } from '../../../utils/responsive';
-import { COLORS } from '../../../utils/theme';
+import { COLORS, BORDER_RADIUS } from '../../../utils/theme';
 
 /**
  * Game Detail Screen - Overview and navigation hub for a specific game
@@ -31,76 +33,117 @@ export default function GameDetailScreen() {
     );
   }
 
+  const { colorScheme, boxArt, boxArtThumbnail } = game.assets;
+  const heroImageSource = boxArt || boxArtThumbnail;
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: game.name }} />
 
       <ScrollView style={styles.scrollView}>
-        {/* Game Info Card */}
-        <Card style={styles.infoCard}>
-          <Card.Content>
-            <Text variant="headlineMedium" style={styles.gameName}>
-              {game.name}
-            </Text>
-
-            <View style={styles.statsRow}>
-              <View style={styles.stat}>
-                <Ionicons name="people" size={isTablet ? 24 : 20} color={COLORS.light.primary} />
-                <Text style={styles.statText}>
-                  {game.playerCount.min}-{game.playerCount.max} players
-                </Text>
-              </View>
-              <View style={styles.stat}>
-                <Ionicons name="time" size={isTablet ? 24 : 20} color={COLORS.light.primary} />
-                <Text style={styles.statText}>
-                  {game.playTime.min}-{game.playTime.max} min
-                </Text>
-              </View>
-              <View style={styles.stat}>
-                <Ionicons name="bar-chart" size={isTablet ? 24 : 20} color={COLORS.light.primary} />
-                <Text style={styles.statText}>Complexity: {game.complexity}/5</Text>
-              </View>
-            </View>
-
-            {game.categories.length > 0 && (
-              <View style={styles.categories}>
-                {game.categories.map((category) => (
-                  <Chip key={category} style={styles.categoryChip}>
-                    {category}
-                  </Chip>
-                ))}
-              </View>
+        {/* Hero Section with Box Art */}
+        {heroImageSource ? (
+          <HeroImage
+            source={heroImageSource}
+            colorScheme={colorScheme}
+            height={isTablet ? 320 : 220}
+          >
+            <RNText style={styles.heroTitle}>{game.name}</RNText>
+            {game.publisher && (
+              <RNText style={styles.heroSubtitle}>{game.publisher}</RNText>
             )}
-          </Card.Content>
-        </Card>
+          </HeroImage>
+        ) : (
+          <View style={[styles.heroPlaceholder, { backgroundColor: colorScheme.primary }]}>
+            <RNText style={styles.heroTitle}>{game.name}</RNText>
+            {game.publisher && (
+              <RNText style={styles.heroSubtitle}>{game.publisher}</RNText>
+            )}
+          </View>
+        )}
+
+        {/* Visual Stats Cards */}
+        <View style={styles.statsContainer}>
+          <View style={[styles.statCard, { backgroundColor: colorScheme.primary }]}>
+            <Ionicons name="people" size={isTablet ? 32 : 24} color="#FFFFFF" />
+            <RNText style={styles.statValue}>
+              {game.playerCount.min}-{game.playerCount.max}
+            </RNText>
+            <RNText style={styles.statLabel}>Players</RNText>
+          </View>
+
+          <View style={[styles.statCard, { backgroundColor: colorScheme.secondary }]}>
+            <Ionicons name="time" size={isTablet ? 32 : 24} color="#FFFFFF" />
+            <RNText style={styles.statValue}>
+              {game.playTime.min}-{game.playTime.max}
+            </RNText>
+            <RNText style={styles.statLabel}>Minutes</RNText>
+          </View>
+
+          <View style={[styles.statCard, { backgroundColor: colorScheme.accent }]}>
+            <StarRating
+              rating={game.complexity}
+              size={isTablet ? 20 : 16}
+              color="#FFFFFF"
+              emptyColor="rgba(255,255,255,0.3)"
+            />
+            <RNText style={styles.statValue}>{game.complexity}</RNText>
+            <RNText style={styles.statLabel}>Complexity</RNText>
+          </View>
+        </View>
+
+        {/* Categories */}
+        {game.categories.length > 0 && (
+          <View style={styles.categoriesSection}>
+            {game.categories.map((category) => (
+              <View
+                key={category}
+                style={[
+                  styles.categoryChip,
+                  { backgroundColor: `${colorScheme.accent}20`, borderColor: colorScheme.accent }
+                ]}
+              >
+                <RNText style={[styles.categoryText, { color: colorScheme.accent }]}>
+                  {category}
+                </RNText>
+              </View>
+            ))}
+          </View>
+        )}
 
         {/* Quick Actions */}
         <View style={styles.actionsContainer}>
-          <TouchableCard
-            onPress={() => router.push(`/game/${game.id}/setup`)}
-            size="large"
-            variant="elevated"
-            style={styles.actionCard}
+          <View
+            style={[styles.actionCard, { borderLeftColor: colorScheme.primary, borderLeftWidth: 4 }]}
           >
-            <View style={styles.actionContent}>
-              <Ionicons name="play-circle" size={isTablet ? 48 : 40} color={COLORS.light.primary} />
-              <Text style={styles.actionTitle}>Start New Game</Text>
-              <Text style={styles.actionSubtitle}>Set up players and begin</Text>
-            </View>
-          </TouchableCard>
+            <TouchableCard
+              onPress={() => router.push(`/game/${game.id}/setup`)}
+              size="large"
+              variant="elevated"
+            >
+              <View style={styles.actionContent}>
+                <Ionicons name="play-circle" size={isTablet ? 48 : 40} color={colorScheme.primary} />
+                <RNText style={styles.actionTitle}>Start New Game</RNText>
+                <RNText style={styles.actionSubtitle}>Set up players and begin</RNText>
+              </View>
+            </TouchableCard>
+          </View>
 
-          <TouchableCard
-            onPress={() => router.push(`/game/${game.id}/rules`)}
-            size="large"
-            variant="elevated"
-            style={styles.actionCard}
+          <View
+            style={[styles.actionCard, { borderLeftColor: colorScheme.secondary, borderLeftWidth: 4 }]}
           >
-            <View style={styles.actionContent}>
-              <Ionicons name="book" size={isTablet ? 48 : 40} color={COLORS.light.secondary} />
-              <Text style={styles.actionTitle}>View Rules</Text>
-              <Text style={styles.actionSubtitle}>Browse rules and FAQs</Text>
-            </View>
-          </TouchableCard>
+            <TouchableCard
+              onPress={() => router.push(`/game/${game.id}/rules`)}
+              size="large"
+              variant="elevated"
+            >
+              <View style={styles.actionContent}>
+                <Ionicons name="book" size={isTablet ? 48 : 40} color={colorScheme.secondary} />
+                <RNText style={styles.actionTitle}>View Rules</RNText>
+                <RNText style={styles.actionSubtitle}>Browse rules and FAQs</RNText>
+              </View>
+            </TouchableCard>
+          </View>
         </View>
 
         {/* Game Features */}
@@ -178,38 +221,67 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.heading,
     color: COLORS.light.error,
   },
-  infoCard: {
-    margin: isTablet ? SPACING.lg : SPACING.md,
-    marginBottom: SPACING.sm,
+  heroPlaceholder: {
+    height: isTablet ? 320 : 220,
+    justifyContent: 'flex-end',
+    padding: SPACING.lg,
   },
-  gameName: {
-    marginBottom: SPACING.md,
-    fontWeight: 'bold',
+  heroTitle: {
+    fontSize: isTablet ? 36 : 28,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    textShadowColor: 'rgba(0,0,0,0.8)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 8,
+    marginBottom: SPACING.xs,
   },
-  statsRow: {
+  heroSubtitle: {
+    fontSize: TYPOGRAPHY.subheading,
+    color: '#FFFFFF',
+    textShadowColor: 'rgba(0,0,0,0.6)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  statsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: SPACING.md,
-    flexWrap: 'wrap',
+    padding: isTablet ? SPACING.lg : SPACING.md,
     gap: SPACING.md,
   },
-  stat: {
-    flexDirection: 'row',
+  statCard: {
+    flex: 1,
     alignItems: 'center',
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.large,
     gap: SPACING.xs,
   },
-  statText: {
-    fontSize: TYPOGRAPHY.body,
-    color: COLORS.light.textSecondary,
+  statValue: {
+    fontSize: isTablet ? TYPOGRAPHY.heading : TYPOGRAPHY.subheading,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
-  categories: {
+  statLabel: {
+    fontSize: TYPOGRAPHY.caption,
+    color: '#FFFFFF',
+    opacity: 0.9,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
+  categoriesSection: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: SPACING.xs,
-    marginTop: SPACING.md,
+    paddingHorizontal: isTablet ? SPACING.lg : SPACING.md,
+    marginBottom: SPACING.md,
   },
   categoryChip: {
-    backgroundColor: COLORS.light.surfaceVariant,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: BORDER_RADIUS.medium,
+    borderWidth: 1,
+  },
+  categoryText: {
+    fontSize: TYPOGRAPHY.body,
+    fontWeight: '600',
   },
   actionsContainer: {
     padding: isTablet ? SPACING.lg : SPACING.md,
@@ -217,6 +289,8 @@ const styles = StyleSheet.create({
   },
   actionCard: {
     marginBottom: 0,
+    borderRadius: BORDER_RADIUS.large,
+    overflow: 'hidden',
   },
   actionContent: {
     alignItems: 'center',

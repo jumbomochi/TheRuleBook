@@ -21,9 +21,41 @@ export default function RootLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="game/[id]"
+        name="game/index"
         options={{
           headerShown: true,
+          title: 'Games',
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="game/[id]/index"
+        options={{
+          headerShown: true,
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="game/[id]/rules"
+        options={{
+          headerShown: true,
+          title: 'Rules',
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="game/[id]/setup"
+        options={{
+          headerShown: true,
+          title: 'Game Setup',
+          headerBackTitle: 'Back',
+        }}
+      />
+      <Stack.Screen
+        name="game/[id]/play"
+        options={{
+          headerShown: true,
+          title: 'Playing',
           headerBackTitle: 'Back',
         }}
       />

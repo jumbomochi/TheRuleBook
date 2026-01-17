@@ -64,6 +64,14 @@ export interface RuleSection {
   subsections?: RuleSection[];
   tags?: string[];
   examples?: string[];
+  illustrations?: RuleIllustration[];
+}
+
+export interface RuleIllustration {
+  id: string;
+  uri: string; // Can be local bundled asset or game:// protocol
+  caption?: string;
+  altText: string;
 }
 
 export interface QuickRefCard {

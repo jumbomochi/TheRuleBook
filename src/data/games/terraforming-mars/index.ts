@@ -30,13 +30,22 @@ export const terraformingMars: Game = {
       content: `
 # Game Overview
 
-In Terraforming Mars, you play as a corporation working to make Mars habitable. You'll increase the oxygen level, temperature, and create ocean tiles to earn Terraform Rating (TR), which represents both victory points and income.
+In the 2400s, mankind begins to terraform the planet Mars. Giant corporations, sponsored by the World Government on Earth, initiate huge projects to raise the temperature, oxygen level, and ocean coverage until the environment is habitable.
 
-**Goal:** Have the most victory points when Mars is fully terraformed (oxygen at 14%, temperature at +8°C, and 9 ocean tiles placed).
+As one of these corporations, you work together to terraform Mars—but you compete for getting the most victory points through contributing the most to the terraforming process. Victory points are awarded not only for your contribution to the terraforming, but also for advancing human infrastructure throughout the solar system and doing other commendable things.
 
-**Key Concept:** Your Terraform Rating (TR) serves dual purposes:
-- It's your income level (you gain TR in MegaCredits each generation)
-- It counts as victory points at game end (1 TR = 1 VP)
+**Goal:** Have the most victory points when Mars is fully terraformed.
+
+**Game End Condition:** The game ends when all three global parameters are maxed out:
+- **Oxygen:** 14%
+- **Temperature:** +8°C
+- **Oceans:** 9 tiles placed
+
+**Key Concept - Terraform Rating (TR):**
+Your Terraform Rating represents both your contribution to terraforming and your victory points:
+- Every time you raise a global parameter, your TR increases by 1
+- Your TR determines your MegaCredit income each generation
+- At game end, TR = Victory Points (1 TR = 1 VP)
       `.trim(),
     },
     {
@@ -46,26 +55,34 @@ In Terraforming Mars, you play as a corporation working to make Mars habitable. 
       content: `
 # Setup
 
-1. **Place the game board** in center with global parameters at starting positions:
-   - Temperature: -30°C
-   - Oxygen: 0%
-   - Ocean tiles: 0/9
+1. **Place the game board** in the center with global parameters at starting positions:
+   - **Temperature track:** Place white marker at -30°C
+   - **Oxygen track:** Place white marker at 0%
+   - **Oceans:** 0 placed (9 reserved ocean tiles nearby)
 
 2. **Each player receives:**
-   - Player board
-   - Player markers (for TR track, production tracks)
-   - Starting resources: 1 cube on each production track
-   - Draw 2 corporation cards (choose 1 or play as "Beginner Corporation")
-   - Draw 10 project cards (buy any for 3 M€ each)
+   - 1 player board (for tracking production and resources)
+   - Player markers in your chosen color
+   - 1 player marker placed on space 20 of the TR track (or 1 if playing as Beginner Corporation)
 
-3. **Starting positions:**
-   - Place TR marker at 20 (or corporation's starting TR)
-   - Set all production to corporation's starting levels
-   - Take starting resources shown on corporation
+3. **Corporation selection:**
+   - **Standard game:** Each player draws 2 corporation cards, chooses 1 to play, and discards the other
+   - **Beginner variant:** Play without corporations (start with 0 production on everything, TR 20, 42 M€)
 
-4. **First Generation:**
+4. **Initial card draft:**
+   - Each player draws 10 project cards from the deck
+   - Each player may **buy** any of these cards for **3 M€ each**
+   - You start with M€ equal to your corporation's starting M€ (or 42 for Beginner Corp)
+   - Discard unbought cards
+
+5. **Production setup:**
+   - Set your production tracks according to your corporation card
+   - Place resource cubes on your player board for starting resources shown on your corporation
+
+6. **First Generation:**
    - Determine starting player randomly
    - Play proceeds clockwise
+   - **Note:** In the first generation, skip the Research Phase
       `.trim(),
       tags: ['setup'],
     },
@@ -76,36 +93,51 @@ In Terraforming Mars, you play as a corporation working to make Mars habitable. 
       content: `
 # Generation (Round) Structure
 
-Each generation has 4 phases:
+Each generation (round) consists of 4 phases that all players go through:
 
-## 1. Player Order
-Shift the first player marker clockwise.
+## Phase 1: Player Order
+Move the first player marker clockwise to the next player. That player will start the action phase.
 
-## 2. Research Phase
-- All players draft cards (or draw 4 cards without drafting)
-- Buy any cards for 3 M€ each
-- Discard unbought cards
+## Phase 2: Research Phase
+*(Skip this phase in the first generation)*
 
-## 3. Action Phase
-Players take turns performing 1-2 actions (or pass):
+All players simultaneously draw 4 project cards from the deck and decide which to buy:
+- Look at all 4 cards
+- Buy any you want for **3 M€ each**
+- Add bought cards to your hand
+- Discard unbought cards face-down
+
+**Optional Variant - Drafting:** Instead of drawing individually, draft cards:
+1. All players draw 4 cards
+2. Choose 1 card to keep, pass the rest to the left
+3. Repeat until all cards are chosen
+4. Buy any of your 4 cards for 3 M€ each
+
+## Phase 3: Action Phase
+Starting with the first player and going clockwise, players take turns performing **1 or 2 actions** (or pass).
 
 **Available Actions:**
-- **Play a card** from hand (pay cost, apply effects)
-- **Use a standard project** (build city, greenery, etc.)
-- **Use blue action cards** (once per generation)
-- **Claim a milestone** (max 3 per game, 8 M€ each)
-- **Fund an award** (increasing cost: 8/14/20 M€)
-- **Convert plants** (8 plants → 1 greenery tile + oxygen)
-- **Convert heat** (8 heat → temperature +1)
+1. **Play a card** from your hand (pay its cost, apply its effects immediately)
+2. **Use a standard project** (always available actions like building cities)
+3. **Claim a milestone** (8 M€, max 3 milestones total in the game)
+4. **Fund an award** (8 M€ for first, 14 M€ for second, 20 M€ for third)
+5. **Use a blue card action** (activate a blue card's action once per generation)
+6. **Convert 8 plants into a greenery tile** (place greenery, raise oxygen if not maxed)
+7. **Convert 8 heat to raise temperature** (increase temperature by 1 step if not maxed)
 
-**Passing:** Once you pass, you're out for the generation.
+**Important:**
+- You may perform 1 or 2 actions per turn (your choice)
+- Once you **pass**, you take no more turns this generation
+- When all players have passed, move to Production Phase
 
-## 4. Production Phase
+## Phase 4: Production Phase
 All players simultaneously:
-1. Convert all energy to heat
-2. Gain resources equal to production values:
-   - M€ (MegaCredits) = TR + M€ production
-   - Steel, Titanium, Plants, Energy, Heat = respective production values
+1. **Energy → Heat:** All energy cubes convert to heat cubes (move them over)
+2. **Gain resources based on production:**
+   - **M€:** Gain M€ equal to your TR + your M€ production
+   - **Steel, Titanium, Plants, Energy, Heat:** Gain resources equal to your production level
+
+After production, if all three global parameters are maxed, the game ends. Otherwise, start a new generation.
       `.trim(),
       tags: ['generation', 'round', 'turn'],
     },
@@ -230,25 +262,47 @@ Always available actions (no cards needed):
       content: `
 # Milestones & Awards
 
-## Milestones
-Claim by paying 8 M€ when you meet the requirement (max 3 total):
-- **Terraformer:** TR 35+
-- **Mayor:** 3+ city tiles
-- **Gardener:** 3+ greenery tiles
-- **Builder:** 8+ building tags
-- **Planner:** 16+ cards in hand
+Milestones and awards provide additional ways to score victory points at the end of the game.
 
-Worth 5 VP at game end.
+## Milestones
+**Claiming:** Pay **8 M€** as an action when you meet the requirement
+
+**Limit:** Only **3 milestones total** can be claimed in the entire game (by any players)
+
+**Available Milestones:**
+- **Terraformer:** Have a TR of at least 35
+- **Mayor:** Own at least 3 city tiles
+- **Gardener:** Own at least 3 greenery tiles
+- **Builder:** Have at least 8 building tags in play
+- **Planner:** Have at least 16 cards in hand when you claim this
+
+**Scoring:** Each milestone you claimed is worth **5 VP** at game end.
+
+**Timing:** You must meet the requirement at the moment you claim it. Once claimed, a milestone is yours even if you later fall below the requirement.
 
 ## Awards
-Fund by paying 8/14/20 M€ (increasing cost):
-- **Landlord:** Most tiles in play
-- **Banker:** Highest M€ production
-- **Scientist:** Most science tags
-- **Thermalist:** Most heat resources
-- **Miner:** Most steel/titanium resources
+**Funding:** Pay M€ as an action to fund an award (you don't need to qualify for it)
 
-At game end: 1st place = 5 VP, 2nd place = 2 VP
+**Cost:**
+- First award funded: **8 M€**
+- Second award funded: **14 M€**
+- Third award funded: **20 M€**
+
+**Limit:** Maximum **3 awards** can be funded in a game (by any players)
+
+**Available Awards:**
+- **Landlord:** Most tiles in play (cities, greeneries, special tiles)
+- **Banker:** Highest M€ production
+- **Scientist:** Most science tags in play
+- **Thermalist:** Most heat resource cubes
+- **Miner:** Most combined steel and titanium resource cubes
+
+**Scoring (at game end):**
+- **1st place:** 5 VP
+- **2nd place:** 2 VP
+- Ties: All tied players get the points for that position
+
+**Important:** You can fund an award you might not win. Funding is strategic—it can force opponents to compete in that category or let you score if you're ahead.
       `.trim(),
       tags: ['milestones', 'awards', 'scoring'],
     },
@@ -348,57 +402,81 @@ Game ends immediately when all three global parameters are maxed:
   faq: [
     {
       id: 'faq-1',
-      question: 'Can I raise a parameter that is already maxed?',
+      question: 'Can I raise a global parameter that is already maxed out?',
       answer:
-        'No. Once a parameter reaches maximum (oxygen 14%, temp +8°C, or 9 oceans), it cannot be raised further. Effects that would raise it are ignored.',
+        'No. Once a parameter reaches maximum (oxygen 14%, temperature +8°C, or 9 ocean tiles placed), it cannot be raised further. Any effects that would raise it are simply ignored, and you don\'t gain TR.',
     },
     {
       id: 'faq-2',
-      question: 'What happens to energy at the end of the generation?',
+      question: 'What happens to my energy at the end of the generation?',
       answer:
-        'ALL energy converts to heat during the production phase, even if you had plans to use it. Plan accordingly.',
+        'ALL energy converts to heat during the production phase automatically. Even if you had plans to use it, it converts. This is mandatory, not optional. Plan accordingly!',
     },
     {
       id: 'faq-3',
-      question: 'Can I use steel/titanium to pay for any card?',
+      question: 'Can I use steel or titanium to pay for any card?',
       answer:
-        'No. Steel can only be used for cards with building tags. Titanium can only be used for cards with space tags. Check the card for these tags.',
+        'No. Steel (worth 2 M€) can ONLY be used for cards with building tags. Titanium (worth 3 M€) can ONLY be used for cards with space tags. Check the tags on the card before using these resources.',
     },
     {
       id: 'faq-4',
-      question: 'Do I get TR for placing greenery from plants?',
+      question: 'Do I get TR when placing a greenery from converting plants?',
       answer:
-        'You gain TR when oxygen increases. If oxygen is already at 14%, you still place the greenery but don\'t gain TR.',
+        'You gain +1 TR only if the oxygen level increases when you place the greenery. If oxygen is already at 14%, you still place the greenery tile but don\'t gain TR.',
     },
     {
       id: 'faq-5',
       question: 'Can I claim multiple milestones in one generation?',
       answer:
-        'Yes, if you meet the requirements and pay 8 M€ for each. But only 3 milestones total can be claimed across all players.',
+        'Yes, if you meet the requirements and pay 8 M€ for each as separate actions. However, only 3 milestones total can be claimed in the entire game across all players.',
     },
     {
       id: 'faq-6',
-      question: 'What if I don\'t have room for ocean tiles I need to place?',
+      question: 'What if there are no ocean spaces left when I need to place an ocean?',
       answer:
-        'Ocean tiles must be placed on designated ocean spaces. If all 9 are filled, the effect is ignored.',
+        'Ocean tiles must be placed on the 9 designated ocean spaces on the board. If all 9 are filled, any effects that would place oceans are ignored.',
     },
     {
       id: 'faq-7',
       question: 'Can I play a card without meeting its requirements?',
       answer:
-        'No. Requirements (temperature, oxygen, tags, etc.) shown in the top-left must be met to play the card.',
+        'No. Requirements shown in the top-left of cards (temperature, oxygen level, number of tags, etc.) must be met at the time you play the card. You cannot play cards if you don\'t meet the requirements.',
     },
     {
       id: 'faq-8',
-      question: 'Do city tiles give me VP by themselves?',
+      question: 'Do city tiles give me victory points by themselves?',
       answer:
-        'No. Cities give you VP based on adjacent greenery tiles (1 VP per adjacent greenery). They also give M€ production bonuses.',
+        'No. Cities themselves don\'t give VP. However, at the end of the game, you score 1 VP for each greenery tile (yours or anyone\'s) adjacent to your city tiles. Cities also provide M€ production bonuses when placed.',
     },
     {
       id: 'faq-9',
-      question: 'Can I raise my production tracks above 10?',
+      question: 'Can my production tracks go above 10?',
       answer:
-        'Production tracks go beyond 10 if you flip the cube to the red side (showing 10+). Some games include markers for tracking higher amounts.',
+        'Yes! Production tracks can go beyond 10. Flip the cube to the red side or use additional markers. Some editions include higher-value cubes for this purpose.',
+    },
+    {
+      id: 'faq-10',
+      question: 'Can I take 0 actions and just pass immediately on my turn?',
+      answer:
+        'Yes. You can pass without taking any actions. Once you pass, you take no more turns this generation. You still participate in the production phase.',
+    },
+    {
+      id: 'faq-11',
+      question: 'Do I have to use my blue card actions every generation?',
+      answer:
+        'No. Blue card actions are optional. You can choose not to use them, and they don\'t carry over to the next generation.',
+    },
+    {
+      id: 'faq-12',
+      question: 'Can I fund an award for a category I\'m losing in?',
+      answer:
+        'Yes! You can fund any award regardless of whether you\'re winning that category. This can be a strategic way to spend M€ and force competition.',
+    },
+    {
+      id: 'faq-13',
+      question: 'What happens if the deck of project cards runs out?',
+      answer:
+        'Shuffle the discard pile to create a new deck. If there are no cards in the discard pile either, no more cards can be drawn.',
     },
   ],
 
@@ -539,5 +617,10 @@ Game ends immediately when all three global parameters are maxed:
   assets: {
     icon: 'terraforming-mars-icon',
     colorScheme: terraformingMarsPalette,
+    cardCover: {
+      image: 'game://terraforming-mars/card-cover.jpg',
+      tagline: 'Transform the Red Planet',
+      themeIcon: 'planet-outline',
+    },
   },
 };

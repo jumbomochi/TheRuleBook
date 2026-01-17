@@ -20,7 +20,7 @@ export const TurnTimer: React.FC<TurnTimerProps> = ({
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
 
     if (isRunning && !isPaused && secondsRemaining > 0) {
       interval = setInterval(() => {

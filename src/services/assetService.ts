@@ -93,8 +93,9 @@ export async function initAssetService(): Promise<void> {
 
 /**
  * Get assets for a game, fetching from BGG if needed
+ * This is the main entry point for accessing game assets
  */
-export async function getGameAssets(gameId: string): Promise<GameAssets> {
+export async function getGameAssets(gameId: string, bggId?: number): Promise<GameAssets> {
   const palette = DEFAULT_PALETTES[gameId] ?? DEFAULT_PALETTE;
 
   const assets: GameAssets = {
@@ -111,10 +112,10 @@ export async function getGameAssets(gameId: string): Promise<GameAssets> {
   }
 
   // Try to fetch from BGG
-  const bggId = KNOWN_BGG_IDS[gameId];
-  if (bggId) {
+  const resolvedBggId = bggId ?? KNOWN_BGG_IDS[gameId];
+  if (resolvedBggId) {
     try {
-      const bggInfo = await getBGGGameInfo(bggId);
+      const bggInfo = await getBGGGameInfo(resolvedBggId);
       if (bggInfo) {
         // Download and cache the box art
         if (bggInfo.image) {
@@ -150,6 +151,14 @@ export async function getGameAssets(gameId: string): Promise<GameAssets> {
   }
 
   return assets;
+}
+
+/**
+ * Prefetch assets for multiple games (useful for library loading)
+ */
+export async function prefetchGameAssets(games: Array<{ id: string; bggId?: number }>): Promise<void> {
+  const promises = games.map(game => getGameAssets(game.id, game.bggId));
+  await Promise.all(promises);
 }
 
 /**

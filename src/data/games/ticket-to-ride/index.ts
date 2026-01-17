@@ -30,11 +30,16 @@ export const ticketToRide: Game = {
       content: `
 # Game Overview
 
-Ticket to Ride is a cross-country train adventure where players collect train cards to claim railway routes connecting cities across North America. The longer the routes, the more points they earn.
+**October 2, 1900** — 28 years to the day since the London eccentric Phileas Fogg accepted and won a £20,000 bet that he could travel around the world in 80 days. Now, at the dawn of the 20th century, some old friends have gathered to celebrate Fogg's impetuous and lucrative gamble—and to make a new wager of their own.
 
-**Goal:** Score the most points by claiming routes, completing destination tickets, and building the longest continuous path.
+The stakes: $1 million in a winner-takes-all competition. The objective: to see which of them can travel by rail to the most cities in North America in just 7 days.
 
-**Game End:** When any player has 2 or fewer train pieces left at the end of their turn, each player (including that player) takes one final turn, then the game ends.
+**Goal:** Score the most points by:
+- Claiming railway routes between cities
+- Completing your destination ticket connections
+- Building the longest continuous path of routes
+
+**Game End:** When any player has 2 or fewer train pieces left at the end of their turn, each player (including that player) takes one final turn. Then the game ends and final scoring occurs.
       `.trim(),
     },
     {
@@ -44,22 +49,27 @@ Ticket to Ride is a cross-country train adventure where players collect train ca
       content: `
 # Setup
 
-1. **Place the game board** in the center showing the map of North America
+1. **Place the game board** in the center of the table showing the map of North America with its many colored routes
 
-2. **Each player receives:**
-   - 45 colored train pieces
-   - 4 train car cards
-   - 3 destination ticket cards (keep at least 2, may keep all 3)
-   - 1 scoring marker (place on start space)
+2. **Each player takes:**
+   - 45 colored train pieces of their chosen color and places them in front of them
+   - 1 matching scoring marker, placed on the start space (0) of the scoring track
+   - 4 train car cards drawn randomly from the shuffled deck
 
-3. **Setup card decks:**
-   - Shuffle train car deck, deal 4 cards to each player
-   - Turn 5 train car cards face-up next to deck
-   - Shuffle destination ticket deck, place near board
+3. **Setup the train car cards:**
+   - Shuffle the 110 train car cards thoroughly
+   - Deal 4 cards to each player (already given above)
+   - Place the remaining cards face-down as a draw pile
+   - Turn 5 cards from the top of the deck face-up next to the draw pile
 
-4. **Determine first player:** The most experienced traveler goes first (or choose randomly)
+4. **Setup destination tickets:**
+   - Shuffle the 30 destination ticket cards
+   - Deal 3 destination tickets to each player
+   - Each player looks at their tickets and must keep at least 2 (may keep all 3)
+   - Return any discarded tickets to the bottom of the deck
+   - Place the destination ticket deck near the board
 
-5. **Play proceeds clockwise** from the first player
+5. **Determine first player:** The most experienced traveler (or choose randomly). Play proceeds clockwise.
       `.trim(),
       tags: ['setup'],
     },
@@ -70,41 +80,60 @@ Ticket to Ride is a cross-country train adventure where players collect train ca
       content: `
 # On Your Turn
 
-Choose **ONE** of the following three actions:
+On your turn, you must perform **ONE and ONLY ONE** of these three actions:
 
 ## 1. Draw Train Car Cards
 
-**Option A:** Draw 2 cards from the face-down deck
-**Option B:** Take 1 face-up card and 1 from deck (or 2 face-up)
+You may draw **2 train car cards** using one of these methods:
 
-**Locomotive (Wild) Rule:** Locomotives are wild cards. If you take a face-up locomotive, that's your entire turn (you don't draw a second card).
+**Drawing Face-Down:**
+- Draw 2 cards from the top of the face-down deck (you don't know what you're getting)
 
-**Refill:** After drawing, refill face-up cards to 5. If 3+ are locomotives, discard all 5 and draw 5 new ones.
+**Drawing Face-Up:**
+- Take any 1 face-up card, then draw 1 more card (either face-up or face-down)
+- OR take 2 face-up cards
+
+**Special Locomotive Rule:**
+- **Locomotives are wild cards** that can be any color
+- If you take a **face-up locomotive**, that is your entire turn—you don't get a second card
+- If you draw a locomotive from the face-down deck (blind), you still get to draw a second card
+
+**Refilling Face-Up Cards:**
+- After you finish drawing, replace any taken face-up cards from the deck
+- If 3 or more of the face-up cards are locomotives, immediately discard all 5 and deal 5 new cards
 
 ## 2. Claim a Route
 
-Play a set of train car cards matching the route's color and length to claim that route:
+To claim a route between two adjacent cities:
 
-1. **Play cards** from your hand matching:
-   - The route's **color** (or gray/any color for gray routes)
-   - The route's **length** (number of spaces)
-2. **Place your train pieces** on all spaces of that route
-3. **Score points** immediately based on route length:
-   - 1 train: 1 point
-   - 2 trains: 2 points
-   - 3 trains: 4 points
-   - 4 trains: 7 points
-   - 5 trains: 10 points
-   - 6 trains: 15 points
-4. **Discard** the played cards
+1. **Play train car cards** from your hand matching:
+   - The **number of spaces** on the route (e.g., 3 spaces = play 3 cards)
+   - The **color** of the route (all cards must match the route color)
+   - For **gray routes**, play any single color of your choice (all cards still must match each other)
+   - **Locomotives (wild)** can substitute for any color
 
-**Locomotives:** Can substitute for any color.
+2. **Place your train pieces** on each space of the route
+
+3. **Score points immediately** by moving your marker on the scoring track:
+   - 1 space: 1 point
+   - 2 spaces: 2 points
+   - 3 spaces: 4 points
+   - 4 spaces: 7 points
+   - 5 spaces: 10 points
+   - 6 spaces: 15 points
+
+4. **Discard the played cards** to the discard pile
 
 ## 3. Draw Destination Tickets
 
-Draw 3 destination ticket cards from the deck. Keep at least 1, return unwanted cards to the bottom of the deck.
+1. Draw **3 destination ticket cards** from the top of the destination ticket deck
+2. Look at all three tickets
+3. **Keep at least 1** of the 3 tickets (you may keep 2 or all 3 if you wish)
+4. Return any unwanted tickets to the **bottom** of the destination ticket deck
 
-**Important:** Completed tickets are worth points at game end. Uncompleted tickets are negative points.
+**Important:** Destination tickets show two cities and a point value. At game end:
+- **Completed tickets** (cities connected by your routes): **Add** points
+- **Incomplete tickets** (cities not connected): **Subtract** points
       `.trim(),
       tags: ['actions', 'turn'],
     },
@@ -284,51 +313,69 @@ If you claimed Seattle-Portland (3) and Portland-San Francisco (5), you could co
     },
     {
       id: 'faq-2',
-      question: 'What happens if I draw tickets and can\'t keep any?',
+      question: 'What happens if I draw tickets and can\'t complete any?',
       answer:
-        'You must keep at least 1 ticket whenever you draw. Choose the one that seems most achievable or worth the most points.',
+        'You must keep at least 1 ticket whenever you draw destination tickets. Choose the one that seems most achievable or worth the most points, even if it\'s risky.',
     },
     {
       id: 'faq-3',
       question: 'Can I claim both routes between two cities?',
       answer:
-        'No. A single player can never claim both parallel routes between the same two cities.',
+        'No. A single player can never claim both parallel routes between the same two cities. In 2-3 player games, only one of the two routes can be claimed by anyone.',
     },
     {
       id: 'faq-4',
       question: 'Do my destination tickets have to use the shortest path?',
       answer:
-        'No! As long as your routes create a continuous connection between the two cities, the ticket is completed. You can take the long way.',
+        'No! As long as your routes create a continuous connection between the two cities, the ticket is completed. You can take the long way around the entire map if needed.',
     },
     {
       id: 'faq-5',
       question: 'What if the train card deck runs out?',
       answer:
-        'Shuffle the discarded train cards to create a new deck. If there are no discards, you cannot draw from the deck (can only take face-up cards).',
+        'Shuffle the discarded train car cards to create a new deck. If there are no discarded cards and the deck is empty, you can only draw from available face-up cards.',
     },
     {
       id: 'faq-6',
-      question: 'Can I claim a 1-train route to block my opponent?',
+      question: 'Can I claim a 1-train route just to block my opponent?',
       answer:
-        'Yes! Claiming short routes to block opponents is a valid strategy, though it may not earn many points.',
+        'Yes! Claiming short routes to block opponents is a valid (if somewhat mean) strategy, though it won\'t earn many points.',
     },
     {
       id: 'faq-7',
-      question: 'If all face-up cards are locomotives, can I take 2?',
+      question: 'If 3 or more face-up cards are locomotives, what happens?',
       answer:
-        'No. The moment 3 or more face-up cards are locomotives, discard all 5 and draw 5 new ones. Then you can take face-up cards normally.',
+        'Immediately discard all 5 face-up cards and deal 5 new ones before any player draws. This prevents the face-up row from having too many locomotives.',
     },
     {
       id: 'faq-8',
       question: 'Does the longest path have to connect to my destination tickets?',
       answer:
-        'No. The longest continuous path bonus is separate from destination tickets. It\'s simply your longest chain of connected routes.',
+        'No. The longest continuous path bonus is completely separate from destination tickets. It\'s simply your longest chain of connected routes, regardless of your tickets.',
     },
     {
       id: 'faq-9',
       question: 'Can multiple players win the longest path bonus?',
       answer:
-        'Yes! If multiple players tie for the longest path, they all receive the +10 point bonus.',
+        'Yes! If multiple players tie for the longest continuous path, they all receive the +10 point bonus.',
+    },
+    {
+      id: 'faq-10',
+      question: 'Can I draw a face-up locomotive as my second card?',
+      answer:
+        'No. If you want to take a face-up locomotive, it must be the only card you draw that turn (it counts as both your cards). You cannot take it as a second card.',
+    },
+    {
+      id: 'faq-11',
+      question: 'In a 2-3 player game, which double route can be claimed?',
+      answer:
+        'Only one of the two parallel routes can be claimed between any two cities. Whoever claims one first blocks the other route for the rest of the game.',
+    },
+    {
+      id: 'faq-12',
+      question: 'Can I look at my destination tickets during the game?',
+      answer:
+        'Yes! Your destination tickets are private information. You can look at them anytime and should keep them secret from other players until final scoring.',
     },
   ],
 
@@ -488,5 +535,10 @@ If you claimed Seattle-Portland (3) and Portland-San Francisco (5), you could co
   assets: {
     icon: 'ticket-to-ride-icon',
     colorScheme: ticketToRidePalette,
+    cardCover: {
+      image: 'game://ticket-to-ride/card-cover.jpg',
+      tagline: 'Cross-Country Train Adventure',
+      themeIcon: 'train',
+    },
   },
 };
